@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CodeChallengeZX</string>
+    <string name="where_are_you">Where are you?</string>
+    <string name="i_will_use">I will use your address to find the fastest delivery option available in your area</string>
+</resources>
