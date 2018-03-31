@@ -8,7 +8,7 @@ import gustavon.com.br.codechallengezx.networking.ApiGraphQL
 /**
  * Created by gustavon on 31/03/18.
  */
-class HomePresenter (var ApiGraphQL: ApiGraphQL, private var view: HomeView) : ApiGraphQL.CallbackPocSearchMethodQuery {
+class HomePresenter (private var ApiGraphQL: ApiGraphQL, private var view: HomeView) : ApiGraphQL.CallbackPocSearchMethodQuery {
 
     override fun onSuccess(pocSearchMethodQuery: Response<PocSearchMethodQuery.Data>) {
         view.searchMethodSuccess(pocSearchMethodQuery)
@@ -18,8 +18,8 @@ class HomePresenter (var ApiGraphQL: ApiGraphQL, private var view: HomeView) : A
         view.searchMethodError(e)
     }
 
-    fun callPocSearchMethod(lat : String, long : String){
-        ApiGraphQL.callPocSearchMethod(this, lat, long)
+    fun pocSearchMethod(lat : String, long : String){
+        ApiGraphQL.pocSearchMethod(this, lat, long)
     }
 
 }

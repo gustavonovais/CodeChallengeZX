@@ -5,6 +5,6 @@ import com.apollographql.apollo.exception.ApolloException
 import gustavon.com.br.codechallengezx.PocSearchMethodQuery
 
 interface HomeView {
-    fun searchMethodSuccess(ocSearchMethodQuery: Response<PocSearchMethodQuery.Data>)
+    fun searchMethodSuccess(pocSearchMethodQuery: Response<PocSearchMethodQuery.Data>)
     fun searchMethodError(e: ApolloException)
 }
