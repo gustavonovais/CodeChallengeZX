@@ -9,11 +9,11 @@ import gustavon.com.br.codechallengezx.products.ProductsFragment
 /**
  * Created by gustavon on 31/03/18.
  */
-class CategoryPageAdapter(fragmentManager: FragmentManager, var list: AllCategoriesSearchQuery.Data?) :
+class CategoryPageAdapter(fragmentManager: FragmentManager, var list: AllCategoriesSearchQuery.Data?, var id : String) :
         FragmentStatePagerAdapter(fragmentManager){
 
     override fun getItem(position: Int): Fragment {
-        return ProductsFragment.newInstance("","")
+        return ProductsFragment.newInstance(id, list?.allCategory()?.get(position)?.id().toString())
     }
 
     override fun getCount(): Int {

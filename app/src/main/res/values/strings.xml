@@ -2,7 +2,8 @@
     <string name="app_name">CodeChallengeZX</string>
     <string name="where_are_you">Where are you?</string>
     <string name="i_will_use">I will use your address to find the fastest delivery option available in your area</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_products">Não existem produtos para esta categoria</string>
+    <string name="error_consult_products">Erro ao consultar produtos</string>
+    <string name="category">"Categorias"</string>
+    <string name="product">"Produto"</string>
 </resources>

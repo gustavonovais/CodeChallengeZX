@@ -3,10 +3,7 @@ package gustavon.com.br.codechallengezx.networking
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
-import gustavon.com.br.codechallengezx.AllCategoriesSearchQuery
-import gustavon.com.br.codechallengezx.BuildConfig
-import gustavon.com.br.codechallengezx.CodeChallengeZxApplication
-import gustavon.com.br.codechallengezx.PocSearchMethodQuery
+import gustavon.com.br.codechallengezx.*
 import gustavon.com.br.codechallengezx.utils.fromISO8601UTC
 import gustavon.com.br.codechallengezx.utils.getDateNow
 
@@ -15,7 +12,24 @@ import gustavon.com.br.codechallengezx.utils.getDateNow
  */
 class ApiGraphQL {
 
-    fun pocSearchMethod(callbackPocSearchMethodQuery: CallbackPocSearchMethodQuery, lat : String, long : String){
+    fun pocCategorySearchMethod(callbackPocCategorySearchMethod: CallbackPocCategorySearchMethod, id : String, categoryId : String){
+        CodeChallengeZxApplication.apolloClient.query(PocCategorySearchQuery.builder()
+                .id(id)
+                .categoryId(categoryId.toLong())
+                .search("")
+                .build()).enqueue(object : ApolloCall.Callback<PocCategorySearchQuery.Data>(){
+
+            override fun onResponse(response: Response<PocCategorySearchQuery.Data>) {
+                callbackPocCategorySearchMethod.onSuccess(response)
+            }
+
+            override fun onFailure(e: ApolloException) {
+                callbackPocCategorySearchMethod.onError(e)
+            }
+        })
+    }
+
+    fun pocSearchMethod(callbackPocSearchMethod: CallbackPocSearchMethod, lat : String, long : String){
         CodeChallengeZxApplication.apolloClient.query(PocSearchMethodQuery.builder()
                 .lat(lat)
                 .long1(long)
@@ -24,11 +38,11 @@ class ApiGraphQL {
 
 
             override fun onResponse(response: Response<PocSearchMethodQuery.Data>) {
-                callbackPocSearchMethodQuery.onSuccess(response)
+                callbackPocSearchMethod.onSuccess(response)
             }
 
             override fun onFailure(e: ApolloException) {
-                callbackPocSearchMethodQuery.onError(e)
+                callbackPocSearchMethod.onError(e)
             }
         })
     }
@@ -51,8 +65,13 @@ class ApiGraphQL {
         fun onError(e: ApolloException)
     }
 
-    interface CallbackPocSearchMethodQuery {
+    interface CallbackPocSearchMethod {
         fun onSuccess(pocSearchMethodQuery: Response<PocSearchMethodQuery.Data>)
+        fun onError(e: ApolloException)
+    }
+
+    interface CallbackPocCategorySearchMethod {
+        fun onSuccess(pocCategorySearchMethod: Response<PocCategorySearchQuery.Data>)
         fun onError(e: ApolloException)
     }
 

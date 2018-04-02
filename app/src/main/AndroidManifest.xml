@@ -24,7 +24,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB-sXWvwFlo093yT_-apT3wFVfndweC5_o" />
 
-        <activity android:name=".category.CategoryActivity"></activity>
+        <activity android:name=".category.CategoryActivity" />
+        <activity android:name=".products.ProductDetailActivity"></activity>
     </application>
 
 </manifest>

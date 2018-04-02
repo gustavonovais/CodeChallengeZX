@@ -15,6 +15,7 @@ import gustavon.com.br.codechallengezx.PocSearchMethodQuery
 import gustavon.com.br.codechallengezx.R
 import gustavon.com.br.codechallengezx.networking.ApiGraphQL
 import gustavon.com.br.codechallengezx.category.CategoryActivity
+import gustavon.com.br.codechallengezx.category.CategoryActivity.Companion.ID
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -54,9 +55,11 @@ class HomeActivity : AppCompatActivity(), HomeView {
         runOnUiThread{
             load.visibility = View.GONE
 
-            var intent  = Intent(this@HomeActivity, CategoryActivity::class.java)
-            //intent.putExtra("url_pull", item?.pulls_url.substringBefore("{"))
-            startActivity(intent)
+            if (pocSearchMethodQuery.data()?.pocSearch()!!.size > 0){
+                var intent  = Intent(this@HomeActivity, CategoryActivity::class.java)
+                intent.putExtra(ID, pocSearchMethodQuery.data()?.pocSearch()?.get(0)?.id())
+                startActivity(intent)
+            }
         }
     }
 

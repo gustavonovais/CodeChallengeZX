@@ -2,22 +2,42 @@ package gustavon.com.br.codechallengezx.products
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.exception.ApolloException
+import gustavon.com.br.codechallengezx.PocCategorySearchQuery
 import gustavon.com.br.codechallengezx.R
+import gustavon.com.br.codechallengezx.category.CategoryActivity.Companion.ID
+import gustavon.com.br.codechallengezx.networking.ApiGraphQL
+import kotlinx.android.synthetic.main.fragment_products.*
 
-class ProductsFragment : Fragment() {
+class ProductsFragment : Fragment(), ProductsView {
+    lateinit var id: String
+    lateinit var categoryId: String
 
-    private var mParam1: String? = null
-    private var mParam2: String? = null
+    lateinit var apiGraphQL: ApiGraphQL
+    lateinit var presenter: ProductsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
-            mParam2 = arguments.getString(ARG_PARAM2)
+            id = arguments.getString(ID)
+            categoryId = arguments.getString(CATEGORY_ID)
         }
+
+        apiGraphQL = ApiGraphQL()
+        presenter = ProductsPresenter(apiGraphQL, this)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        load.visibility = View.VISIBLE
+        presenter.pocCagegorySearchMethod(id, categoryId)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -25,17 +45,37 @@ class ProductsFragment : Fragment() {
         return inflater!!.inflate(R.layout.fragment_products, container, false)
     }
 
-    companion object {
-        private val ARG_PARAM1 = "param1"
-        private val ARG_PARAM2 = "param2"
+    override fun pocCagegorySearchMethodSuccess(pocCategorySearchQuery: Response<PocCategorySearchQuery.Data>) {
+        activity.runOnUiThread {
+            load.visibility = View.GONE
 
-        fun newInstance(param1: String, param2: String): ProductsFragment {
+            if (pocCategorySearchQuery.data()?.poc()?.products()!!.size > 0){
+                recycler_view.layoutManager = LinearLayoutManager(activity)
+                recycler_view.adapter = ProductAdaper(pocCategorySearchQuery.data()?.poc()?.products() as MutableList<PocCategorySearchQuery.Product>)
+            } else {
+                text_error.visibility = View.VISIBLE
+                text_error.text = getString(R.string.empty_products)
+            }
+        }
+    }
+
+    override fun pocCagegorySearchMethodError(e: ApolloException) {
+        activity.runOnUiThread {
+            load.visibility = View.GONE
+            Toast.makeText(activity, getString(R.string.error_consult_products), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    companion object {
+        private const val CATEGORY_ID = "CATEGORY_ID"
+
+        fun newInstance(id: String, categoryId: String): ProductsFragment {
             val fragment = ProductsFragment()
             val args = Bundle()
-            args.putString(ARG_PARAM1, param1)
-            args.putString(ARG_PARAM2, param2)
+            args.putString(ID, id)
+            args.putString(CATEGORY_ID, categoryId)
             fragment.arguments = args
             return fragment
         }
     }
-}// Required empty public constructor
+}

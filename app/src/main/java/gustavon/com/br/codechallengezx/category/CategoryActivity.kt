@@ -10,18 +10,22 @@ import com.apollographql.apollo.exception.ApolloException
 import gustavon.com.br.codechallengezx.AllCategoriesSearchQuery
 import gustavon.com.br.codechallengezx.R
 import gustavon.com.br.codechallengezx.networking.ApiGraphQL
-import kotlinx.android.synthetic.main.activity_produtcs.*
+import kotlinx.android.synthetic.main.activity_category.*
 
 class CategoryActivity : AppCompatActivity(), CategoryView{
+
     private lateinit var presenter: CategoryPresenter
     private lateinit var apiGraphQL: ApiGraphQL
+    private lateinit var id : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_produtcs)
-        title = ""
+        setContentView(R.layout.activity_category)
+        title = getString(R.string.category)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        id = intent.extras.getString(ID)
 
         apiGraphQL = ApiGraphQL()
         presenter = CategoryPresenter(apiGraphQL, this)
@@ -44,7 +48,7 @@ class CategoryActivity : AppCompatActivity(), CategoryView{
         runOnUiThread {
             load.visibility = View.GONE
             layout.visibility = View.VISIBLE
-            viewPager.adapter = CategoryPageAdapter(supportFragmentManager, allCategoriesSearchQuery.data())
+            viewPager.adapter = CategoryPageAdapter(supportFragmentManager, allCategoriesSearchQuery.data(), id)
             tabLayout.setupWithViewPager(viewPager)
         }
     }
@@ -52,5 +56,9 @@ class CategoryActivity : AppCompatActivity(), CategoryView{
     override fun allCategoriesSearchError(e: ApolloException) {
         load.visibility = View.GONE
         Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    companion object {
+        const val ID = "ID"
     }
 }
