@@ -1,30 +1,24 @@
-package gustavon.com.br.codechallengezx
+package gustavon.com.br.codechallengezx.networking
 
-import android.app.Application
 import com.apollographql.apollo.ApolloClient
+import dagger.Module
+import dagger.Provides
+import gustavon.com.br.codechallengezx.BuildConfig
 import gustavon.com.br.codechallengezx.type.CustomType
 import gustavon.com.br.codechallengezx.utils.ISO8601Adapter
 import okhttp3.OkHttpClient
 
 /**
- * Created by gustavon on 31/03/18.
+ * Created by gustavon on 02/04/18.
  */
-open class CodeChallengeZxApplication : Application(){
+@Module
+class NetworkModule {
 
-    companion object {
-        lateinit var apolloClient : ApolloClient
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-
-        configApolloClient()
-    }
-
-    private fun configApolloClient() {
+    @Provides
+    fun provideApolloClient(): ApolloClient {
         val httpClient = OkHttpClient.Builder().build()
 
-        apolloClient = ApolloClient.builder()
+        return ApolloClient.builder()
                 .serverUrl(BuildConfig.BASEURL)
                 .addCustomTypeAdapter(CustomType.DATETIME, ISO8601Adapter())
                 .okHttpClient(httpClient)
@@ -32,4 +26,3 @@ open class CodeChallengeZxApplication : Application(){
     }
 
 }
-

@@ -57,7 +57,7 @@ class ProductDetailActivity : AppCompatActivity() {
             text_title.text = title_text
         }
 
-        if (price != null || price == "null"){
+        if (price != "null"){
             text_price.text = price.format(2)
         } else {
             text_price.text = getString(R.string.value_zero)

@@ -13,9 +13,9 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import gustavon.com.br.codechallengezx.PocSearchMethodQuery
 import gustavon.com.br.codechallengezx.R
-import gustavon.com.br.codechallengezx.networking.ApiGraphQL
 import gustavon.com.br.codechallengezx.category.CategoryActivity
 import gustavon.com.br.codechallengezx.category.CategoryActivity.Companion.ID
+import gustavon.com.br.codechallengezx.networking.ApiGraphQL
 import kotlinx.android.synthetic.main.activity_home.*
 
 

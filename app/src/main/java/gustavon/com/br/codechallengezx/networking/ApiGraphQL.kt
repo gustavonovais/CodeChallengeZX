@@ -1,23 +1,37 @@
 package gustavon.com.br.codechallengezx.networking
 
 import com.apollographql.apollo.ApolloCall
+import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
-import gustavon.com.br.codechallengezx.*
+import gustavon.com.br.codechallengezx.AllCategoriesSearchQuery
+import gustavon.com.br.codechallengezx.BuildConfig
+import gustavon.com.br.codechallengezx.PocCategorySearchQuery
+import gustavon.com.br.codechallengezx.PocSearchMethodQuery
+import gustavon.com.br.codechallengezx.dependencies.DaggerNetworkDependencies
 import gustavon.com.br.codechallengezx.utils.fromISO8601UTC
 import gustavon.com.br.codechallengezx.utils.getDateNow
+import javax.inject.Inject
 
 /**
  * Created by gustavon on 31/03/18.
  */
+
 open class ApiGraphQL {
 
-    fun pocCategorySearchMethod(callbackPocCategorySearchMethod: CallbackPocCategorySearchMethod, id : String, categoryId : String){
-        CodeChallengeZxApplication.apolloClient.query(PocCategorySearchQuery.builder()
+    @Inject
+    lateinit var apolloClient: ApolloClient
+
+    init {
+        DaggerNetworkDependencies.builder().build().inject(this)
+    }
+
+    fun pocCategorySearchMethod(callbackPocCategorySearchMethod: CallbackPocCategorySearchMethod, id: String, categoryId: String) {
+        apolloClient.query(PocCategorySearchQuery.builder()
                 .id(id)
                 .categoryId(categoryId.toLong())
                 .search("")
-                .build()).enqueue(object : ApolloCall.Callback<PocCategorySearchQuery.Data>(){
+                .build()).enqueue(object : ApolloCall.Callback<PocCategorySearchQuery.Data>() {
 
             override fun onResponse(response: Response<PocCategorySearchQuery.Data>) {
                 callbackPocCategorySearchMethod.onSuccess(response)
@@ -29,8 +43,8 @@ open class ApiGraphQL {
         })
     }
 
-    fun pocSearchMethod(callbackPocSearchMethod: CallbackPocSearchMethod, lat : String, long : String){
-        CodeChallengeZxApplication.apolloClient.query(PocSearchMethodQuery.builder()
+    fun pocSearchMethod(callbackPocSearchMethod: CallbackPocSearchMethod, lat: String, long: String) {
+        apolloClient.query(PocSearchMethodQuery.builder()
                 .lat(lat)
                 .long1(long)
                 .algorithm(BuildConfig.ALGORITHM)
@@ -47,8 +61,8 @@ open class ApiGraphQL {
         })
     }
 
-    fun allCategoriesSearch(callbackAllCategories: CallbackAllCategories){
-        CodeChallengeZxApplication.apolloClient.query(AllCategoriesSearchQuery.builder().build()).enqueue(object : ApolloCall.Callback<AllCategoriesSearchQuery.Data>(){
+    fun allCategoriesSearch(callbackAllCategories: CallbackAllCategories) {
+        apolloClient.query(AllCategoriesSearchQuery.builder().build()).enqueue(object : ApolloCall.Callback<AllCategoriesSearchQuery.Data>() {
 
             override fun onResponse(response: Response<AllCategoriesSearchQuery.Data>) {
                 callbackAllCategories.onSuccess(response)
