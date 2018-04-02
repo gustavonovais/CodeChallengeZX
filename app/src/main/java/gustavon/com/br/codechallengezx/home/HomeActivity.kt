@@ -21,16 +21,17 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), HomeView {
 
-    private lateinit var presenter: HomePresenter
-    private lateinit var apiGraphQL: ApiGraphQL
+    private var apiGraphQL = ApiGraphQL()
+    private var presenter: HomePresenter
+
+    init {
+        presenter = HomePresenter(apiGraphQL,this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        title = "Delivery address"
-
-        apiGraphQL = ApiGraphQL()
-        presenter = HomePresenter(apiGraphQL,this)
+        title = getString(R.string.delivery_address)
 
         configPlaceAutoComplete()
     }
@@ -45,7 +46,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
             }
 
             override fun onError(status: Status) {
-                Toast.makeText(this@HomeActivity, "Ocorreu um erro: $status", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@HomeActivity, getString(R.string.error_locale), Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -55,7 +56,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
         runOnUiThread{
             load.visibility = View.GONE
 
-            if (pocSearchMethodQuery.data()?.pocSearch()!!.size > 0){
+            if (!pocSearchMethodQuery.data()?.pocSearch()!!.isEmpty()){
                 var intent  = Intent(this@HomeActivity, CategoryActivity::class.java)
                 intent.putExtra(ID, pocSearchMethodQuery.data()?.pocSearch()?.get(0)?.id())
                 startActivity(intent)

@@ -3,21 +3,21 @@
     android:id="@+id/card_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="@dimen/margin_product_bottom_top">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="20dp">
+        android:layout_margin="@dimen/margin_product_item">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/product_img"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/img_product"
+            android:layout_height="@dimen/img_product"
             android:layout_alignParentLeft="true"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="@dimen/margin_product" />
 
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_alignParentTop="true"
             android:layout_below="@id/product_img"
             android:layout_centerInParent="true"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/margin_product_bottom_top"
             android:layout_toRightOf="@id/product_img" />
 
         <TextView
@@ -43,9 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_price"
             android:layout_centerInParent="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_product_bottom_top"
             android:layout_toRightOf="@id/product_img" />
-
 
     </RelativeLayout>
 

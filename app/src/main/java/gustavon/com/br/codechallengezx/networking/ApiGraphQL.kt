@@ -10,7 +10,7 @@ import gustavon.com.br.codechallengezx.utils.getDateNow
 /**
  * Created by gustavon on 31/03/18.
  */
-class ApiGraphQL {
+open class ApiGraphQL {
 
     fun pocCategorySearchMethod(callbackPocCategorySearchMethod: CallbackPocCategorySearchMethod, id : String, categoryId : String){
         CodeChallengeZxApplication.apolloClient.query(PocCategorySearchQuery.builder()

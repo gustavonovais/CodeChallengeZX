@@ -14,24 +14,35 @@ import kotlinx.android.synthetic.main.activity_category.*
 
 class CategoryActivity : AppCompatActivity(), CategoryView{
 
-    private lateinit var presenter: CategoryPresenter
-    private lateinit var apiGraphQL: ApiGraphQL
+    private var presenter: CategoryPresenter
+    private var apiGraphQL = ApiGraphQL()
     private lateinit var id : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
+
         title = getString(R.string.category)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+        }
 
-        id = intent.extras.getString(ID)
+        searchAllCategories()
+        getArgs()
+    }
 
-        apiGraphQL = ApiGraphQL()
+    init {
         presenter = CategoryPresenter(apiGraphQL, this)
+    }
 
+    private fun searchAllCategories(){
         load.visibility = View.VISIBLE
         presenter.allCategoriesSearch()
+    }
+
+    private fun getArgs(){
+        id = intent.extras.getString(ID)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

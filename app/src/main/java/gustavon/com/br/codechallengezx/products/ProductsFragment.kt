@@ -3,6 +3,7 @@ package gustavon.com.br.codechallengezx.products
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,15 +47,17 @@ class ProductsFragment : Fragment(), ProductsView {
     }
 
     override fun pocCagegorySearchMethodSuccess(pocCategorySearchQuery: Response<PocCategorySearchQuery.Data>) {
-        activity.runOnUiThread {
-            load.visibility = View.GONE
+        if (activity != null){
+            activity.runOnUiThread {
+                load.visibility = View.GONE
 
-            if (pocCategorySearchQuery.data()?.poc()?.products()!!.size > 0){
-                recycler_view.layoutManager = LinearLayoutManager(activity)
-                recycler_view.adapter = ProductAdaper(pocCategorySearchQuery.data()?.poc()?.products() as MutableList<PocCategorySearchQuery.Product>)
-            } else {
-                text_error.visibility = View.VISIBLE
-                text_error.text = getString(R.string.empty_products)
+                if (!pocCategorySearchQuery.data()?.poc()?.products()!!.isEmpty()){
+                    recycler_view.layoutManager = LinearLayoutManager(activity)
+                    recycler_view.adapter = ProductAdapter(pocCategorySearchQuery.data()?.poc()?.products() as MutableList<PocCategorySearchQuery.Product>)
+                } else {
+                    text_error.visibility = View.VISIBLE
+                    text_error.text = getString(R.string.empty_products)
+                }
             }
         }
     }

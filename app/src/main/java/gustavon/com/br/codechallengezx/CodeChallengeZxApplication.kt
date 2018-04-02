@@ -22,14 +22,7 @@ open class CodeChallengeZxApplication : Application(){
     }
 
     private fun configApolloClient() {
-        val httpClient = OkHttpClient.Builder()
-                .addInterceptor { chain ->
-                    val original = chain.request()
-                    val builder = original.newBuilder().method(original.method(), original.body())
-                    builder.header("User-Agent", "Android Apollo Client")
-                    chain.proceed(builder.build())
-                }
-                .build()
+        val httpClient = OkHttpClient.Builder().build()
 
         apolloClient = ApolloClient.builder()
                 .serverUrl(BuildConfig.BASEURL)

@@ -8,6 +8,7 @@ import java.util.*
  */
 
 var format: String = "yyyy-MM-dd'T'HH:mm:ss"
+var dateError: String = "is not a valid ISO 8601 date"
 
 fun fromISO8601UTC(dateStr: String): Date {
     val df1 = SimpleDateFormat(format)

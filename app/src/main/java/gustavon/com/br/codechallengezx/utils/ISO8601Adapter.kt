@@ -1,6 +1,7 @@
 package gustavon.com.br.codechallengezx.utils
 
 import com.apollographql.apollo.CustomTypeAdapter
+import gustavon.com.br.codechallengezx.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,7 +14,7 @@ class ISO8601Adapter : CustomTypeAdapter<Date> {
         try {
             return ISO8601.parse(value)
         } catch (e: ParseException) {
-            throw IllegalArgumentException("$value is not a valid ISO 8601 date", e)
+            throw IllegalArgumentException(dateError, e)
         }
 
     }

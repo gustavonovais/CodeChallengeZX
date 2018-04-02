@@ -1,7 +1,7 @@
 package gustavon.com.br.codechallengezx.products
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.squareup.picasso.Picasso
 import gustavon.com.br.codechallengezx.R
@@ -16,19 +16,22 @@ class ProductDetailActivity : AppCompatActivity() {
         const val IMG = "IMG"
     }
 
-    var price =  ""
-    var description = ""
-    var title = ""
-    var img = ""
+    private var price =  ""
+    private var description = ""
+    private var title_text = ""
+    private var img = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.product_item)
-        title = getString(R.string.product)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+        }
 
         getArgs()
         configFields()
+        title = getString(R.string.product)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -50,8 +53,14 @@ class ProductDetailActivity : AppCompatActivity() {
             text_description.text = description
         }
 
-        if (!title.isNullOrEmpty()){
-            text_title.text = title
+        if (!title_text.isNullOrEmpty()){
+            text_title.text = title_text
+        }
+
+        if (price != null || price == "null"){
+            text_price.text = price.format(2)
+        } else {
+            text_price.text = getString(R.string.value_zero)
         }
 
         if (!price.isNullOrEmpty()){
@@ -70,7 +79,7 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         if (intent.extras.getString(TITLE) != null){
-            title = intent.extras.getString(TITLE)
+            title_text = intent.extras.getString(TITLE)
         }
 
         if (intent.extras.getString(IMG) != null){
