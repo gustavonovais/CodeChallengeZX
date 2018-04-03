@@ -8,7 +8,7 @@ import gustavon.com.br.codechallengezx.networking.ApiGraphQL
 /**
  * Created by gustavon on 31/03/18.
  */
-class CategoryPresenter (private var ApiGraphQL: ApiGraphQL, private var view: CategoryView) : ApiGraphQL.CallbackAllCategories{
+class CategoryPresenter (private var apiGraphQL: ApiGraphQL, private var view: CategoryView) : ApiGraphQL.CallbackAllCategories{
 
     override fun onSuccess(allCategoriesSearchQuery: Response<AllCategoriesSearchQuery.Data>) {
         view.allCategoriesSearchSuccess(allCategoriesSearchQuery)
@@ -19,7 +19,7 @@ class CategoryPresenter (private var ApiGraphQL: ApiGraphQL, private var view: C
     }
 
     fun allCategoriesSearch(){
-        ApiGraphQL.allCategoriesSearch(this)
+        apiGraphQL.allCategoriesSearch(this)
     }
 
 }
