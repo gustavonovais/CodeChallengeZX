@@ -57,14 +57,10 @@ class ProductDetailActivity : AppCompatActivity() {
             text_title.text = title_text
         }
 
-        if (price != "null"){
-            text_price.text = price.format(2)
-        } else {
+        if (price.equals("null", true)){
             text_price.text = getString(R.string.value_zero)
-        }
-
-        if (!price.isNullOrEmpty()){
-            text_price.text = price
+        } else {
+            text_price.text = price.format(2)
         }
     }
 
