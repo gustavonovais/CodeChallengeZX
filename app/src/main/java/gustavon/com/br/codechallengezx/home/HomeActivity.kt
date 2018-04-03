@@ -60,6 +60,8 @@ class HomeActivity : AppCompatActivity(), HomeView {
                 var intent  = Intent(this@HomeActivity, CategoryActivity::class.java)
                 intent.putExtra(ID, pocSearchMethodQuery.data()?.pocSearch()?.get(0)?.id())
                 startActivity(intent)
+            } else {
+                Toast.makeText(this@HomeActivity, getString(R.string.error_poc), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -67,7 +69,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     override fun searchMethodError(e: ApolloException) {
         runOnUiThread{
             load.visibility = View.GONE
-            Toast.makeText(this@HomeActivity, e.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this@HomeActivity, getString(R.string.error_locale), Toast.LENGTH_LONG).show()
         }
     }
 
