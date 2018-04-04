@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CodeChallengeZX</string>
+    <string name="where_are_you">Where are you?</string>
+    <string name="i_will_use">I will use your address to find the fastest delivery option available in your area</string>
+    <string name="empty_products">There are no products to list in this category.</string>
+    <string name="error_consult_products">There was an error fetching product</string>
+    <string name="category">Category</string>
+    <string name="product">Product</string>
+    <string name="value_zero">0.00</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="error_locale">There was an error fetching locale</string>
+    <string name="error_poc">We did not find a poc near your location.</string>
+</resources>
